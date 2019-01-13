@@ -35,3 +35,18 @@ app.post('/updateLabStatus', function (req, res) {
       res.sendStatus(200)
     })
 })
+
+app.post('/newLab', function (req, res) {
+  var content = fs.readFileSync(confPath)
+  var json = JSON.parse(content)
+
+  console.log(req.body)
+
+  json.push(req.body)
+
+  console.log(JSON.stringify(json))
+
+  fs.writeFile(confPath, JSON.stringify(json), function () {
+    res.sendStatus(200)
+  })
+})

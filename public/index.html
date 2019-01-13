@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
   <head>
@@ -151,6 +150,7 @@
     </style>
     <style>
         .button {
+			width: 150px;
             padding: 15px 25px;
             font-size: 24px;
             text-align: center;
@@ -245,8 +245,7 @@
     margin: auto;
     padding: 20px;
     border: 1px solid #888;
-    width: 50%;
-        height: 440px;
+	width: 50%
       }
       .close {
     color: #aaaaaa;
@@ -293,7 +292,7 @@
       <center><a style="font-family: Noto Sans,sans-serif; font-weight: bold; font-size: 250%; color: white"><u>Gestione rete laboratorio</u></a></center>
     </div>
     <br>
-    <table id="t01" align="center" style="width: 500px">
+    <table id="t01" align="center" style="width: 300px">
     <tr><th style="width: 200px"><a style="font-family: Noto Sans,sans-serif; font-weight: bold; font-size: 100%; color: white">Lab 1</a>
         </th><td>
         <div class="onoffswitch">
@@ -328,41 +327,68 @@
 	<br>
     <table align="center" style="border: 1px">
         <th style="border: transparent">
-            <button id="out" class="button" style="width: 20%">add Lab</button>
+            <button id="out" class="button">add Lab</button>
         </th>
 	</table>
 	<br>
 	<div id="myModal" class="modal">
-	<div class="modal-content" style="height: 250px;">
+	<div class="modal-content">
 	    <span class="close" id="closeModal">&times;</span>
 		<u align="left" style="font-family: Noto Sans,sans-serif; font-weight: bold; font-size: 200%; color: black">Add Lab</u>
-		<br>
-        <table style="border: 1px">
-			<tr>
-                <th style="border: transparent">
+		<div style="width: 100%; margin-top: 25px">
+                <div style="display: inline-block; border: transparent; float: left">
                     <a style="font-family: Noto Sans,sans-serif; font-weight: bold; font-size: 100%; color: black">network</a><br>
-                    <input id="network" required pattern="^([0-9]{1,3}\.){3}[0-9]{1,3}$"><br>
-                </th>
-                <th style="border: transparent">
+                    <input id="network" pattern="^([0-9]{1,3}\.){3}[0-9]{1,3}$"><br>
+                </div>
+                <div style="display: inline-block; border: transparent; float: right">
                     <a style="font-family: Noto Sans,sans-serif; font-weight: bold; font-size: 100%; color: black">subnet</a><br>
-                    <input id="network" required pattern="^([0-9]{1,3}\.){3}[0-9]{1,3}$"><br>
-                </th>
-            </tr>
-		</table>
-		<button class="button" style="width: 10%; float: right" id="submit">submit</button>
+                    <input id="subnet" pattern="^([0-9]{1,3}\.){3}[0-9]{1,3}$"><br>
+                </div>
+				<div style="clear: both"></div>
+		</div>
+		<div style="margin-top: 25px; text-align: center; width: 100%">
+			<button class="button" id="next" style="width: 100px">next</button>
+		</div>
 	</div>
+</div>
+<div id="submitModal" class="modal">
+  <div class="modal-content">
+    <span class="close" id="closesubmitModal">&times;</span>
+    <u align="left" style="font-family: Noto Sans,sans-serif; font-weight: bold; font-size: 200%; color: black">Add Lab</u>
+    <div>
+      <a style="font-family: Noto Sans,sans-serif; font-weight: bold; font-size: 100%; color: black">Lab name</a><br><input id="name"><br>
+    </div>
+    <div style="margin-top: 25px; text-align: center; width: 100%">
+			<button class="button" id="submit" style="width: 120px">submit</button>
+		</div>
+  </div>
 </div>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script type="text/javascript">
       var lab1 = document.getElementById("lab1");
       var lab2 = document.getElementById("lab2");
       var lab3 = document.getElementById("lab3");
-	  
-	  var btn = document.getElementById("out");
-	  var modal = document.getElementById("myModal");
-	  var span = document.getElementById("closeModal");
+
+  	  var btn = document.getElementById("out");
+  	  var modal = document.getElementById("myModal");
+  	  var span = document.getElementById("closeModal");
+
+      var next = document.getElementById("next");
+      var network = document.getElementById("network");
+      var subnet = document.getElementById("subnet");
+
+      var submitModal = document.getElementById("submitModal");
+      var submitSpan = document.getElementById("closesubmitModal");
+      var submit = document.getElementById("submit");
 
       var labs = document.getElementsByName("onoffswitch");
+
+      var newLab = {
+        "name": "",
+        "value": false,
+        "network": "",
+        "subnet": ""
+      }
 
       // get Lab status from server
       $.get('/initLabStatus')
@@ -411,16 +437,46 @@
           })
         })
       })
-	  
+
 	  btn.onclick = function(e) {
-		e.preventDefault();
-		
+		    e.preventDefault();
+
         modal.style.display = "block";
 	  }
    	  span.onclick = function () {
         modal.style.display = "none";
 	  }
-	  
+
+    next.onclick = function (e) {
+      e.preventDefault();
+
+      if (/^([0-9]{1,3}\.){3}[0-9]{1,3}$/.test(network.value) && /^([0-9]{1,3}\.){3}[0-9]{1,3}$/.test(subnet.value)) {
+        newLab.network = network.value;
+        newLab.subnet = subnet.value;
+        modal.style.display = "none"
+        submitModal.style.display = "block"
+
+        submit.onclick = function (e) {
+          e.preventDefault();
+
+          newLab.name = document.getElementById("name").value;
+          $.post("/newLab", newLab)
+            .done(function (data) {
+              console.log(data)
+              alert("Lab added correctly")
+              submitModal.style.display = "none"
+            })
+            .fail(function (err) {
+              console.log(err)
+            })
+        }
+      }
+      else {
+        alert("Bad network ip or subnet mask")
+      }
+
+    }
+
 	  window.onclick = function(event) {
 	    if (event.target == modal) {
             modal.style.display = "none";
