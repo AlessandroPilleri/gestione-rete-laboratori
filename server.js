@@ -2,7 +2,8 @@ var express = require('express')
 var bodyParser = require('body-parser');
 var fs = require('fs')
 
-var confPath = './json/config.json'
+var confJSON = './conf/config.json'
+var confProxy = './conf/proxy_access.txt'
 
 var app = express()
 
@@ -13,12 +14,12 @@ app.use(express.static('public'))
 app.listen(80)
 
 app.get('/initLabStatus', function (req, res) {
-  var content = fs.readFileSync(confPath)
+  var content = fs.readFileSync(confJSON)
   res.send(content)
 })
 
 app.post('/updateLabStatus', function (req, res) {
-  var content = fs.readFileSync(confPath)
+  var content = fs.readFileSync(confJSON)
   var json  = JSON.parse(content)
 
   console.log(req.body)
@@ -31,13 +32,13 @@ app.post('/updateLabStatus', function (req, res) {
 
   console.log(JSON.stringify(json))
 
-  fs.writeFile(confPath, JSON.stringify(json), function () {
+  fs.writeFile(confJSON, JSON.stringify(json), function () {
       res.sendStatus(200)
     })
 })
 
 app.post('/newLab', function (req, res) {
-  var content = fs.readFileSync(confPath)
+  var content = fs.readFileSync(confJSON)
   var json = JSON.parse(content)
 
   console.log(req.body)
@@ -46,7 +47,7 @@ app.post('/newLab', function (req, res) {
 
   console.log(JSON.stringify(json))
 
-  fs.writeFile(confPath, JSON.stringify(json), function () {
+  fs.writeFile(confJSON, JSON.stringify(json), function () {
     res.sendStatus(200)
   })
 })

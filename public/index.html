@@ -2,6 +2,7 @@
 <html lang="en" dir="ltr">
   <head>
     <meta charset="utf-8">
+    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
     <meta name="viewpoint" content="width=device-width, initial-scale=1">
     <style>
             /* The container */
@@ -234,18 +235,25 @@
     left: 0;
     top: 0;
     width: 100%;
-    height: 100%;
+    height: 110%;
     overflow: auto;
     background-color: rgb(0,0,0);
     background-color: rgba(0,0,0,0.4);
+    animation-name: scroll;
+    animation-duration: 1s;
       }
+
+    @keyframes scroll {
+      0% {top: -10%; opacity: 0}
+      100% {top: 0%; opacity: 1}
+    }
 
       .modal-content {
     background-color: #fefefe;
     margin: auto;
     padding: 20px;
     border: 1px solid #888;
-	width: 50%
+	width: 40%
       }
       .close {
     color: #aaaaaa;
@@ -265,8 +273,8 @@
                 width: 90%;
             }
             table, th, td {
-                border: 1px solid black;
                 border-collapse: collapse;
+                border-style: none;
             }
             th, td {
                 width: 10%;
@@ -284,45 +292,42 @@
                 color: white;
             }
         </style>
+    <style>
+      a#title {
+        position: relative;
+        animation-name: slide;
+        animation-duration: 1s;
+        left: 37%;
+      }
+
+      @keyframes slide {
+        0% {left:20%; opacity: 0}
+        100% {left: 37%; opacity: 1}
+      }
+    </style>
+    <style>
+      div#content {
+        position: relative;
+        animation-name: slide-box;
+        animation-duration: 1s;
+        left: 25%;
+      }
+
+      @keyframes slide-box {
+        0% {left: 10%; opacity: 0}
+        100% {left: 25%; opacity: 1}
+      }
+    </style>
     <title>Gestione rete laboratori</title>
   </head>
   <body>
-    <body bgcolor="#808080">
-    <div class="sticky">
-      <center><a style="font-family: Noto Sans,sans-serif; font-weight: bold; font-size: 250%; color: white"><u>Gestione rete laboratorio</u></a></center>
-    </div>
-    <br>
+    <body bgcolor="#3b3b3b">
+      <br>
+      <a id="title" style="font-family: 'Roboto', sans-serif; font-weight: bold; font-size: 280%; color: #fff; text-shadow: 8px 8px 4px #212121">Gestione rete laboratorio</a>
+      <br>
+    <div id="content" style="background-color: #cecece; width: 50%; height: 90%; box-shadow: 10px 10px 5px #212121">
+      <br>
     <table id="t01" align="center" style="width: 300px">
-    <tr><th style="width: 200px"><a style="font-family: Noto Sans,sans-serif; font-weight: bold; font-size: 100%; color: white">Lab 1</a>
-        </th><td>
-        <div class="onoffswitch">
-        <input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="lab1">
-        <label class="onoffswitch-label" for="lab1">
-            <span class="onoffswitch-inner"></span>
-            <span class="onoffswitch-switch"></span>
-        </label>
-    </div>
-    </td>
-    <tr><th style="width: 200px"><a style="font-family: Noto Sans,sans-serif; font-weight: bold; font-size: 100%; color: white">Lab 2</a>
-        </th><td>
-        <div class="onoffswitch">
-        <input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="lab2">
-        <label class="onoffswitch-label" for="lab2">
-            <span class="onoffswitch-inner"></span>
-            <span class="onoffswitch-switch"></span>
-        </label>
-    </div>
-    </td>
-    <tr><th style="width: 200px"><a style="font-family: Noto Sans,sans-serif; font-weight: bold; font-size: 100%; color: white">Lab 3</a>
-        </th><td>
-        <div class="onoffswitch">
-        <input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="lab3">
-        <label class="onoffswitch-label" for="lab3">
-            <span class="onoffswitch-inner"></span>
-            <span class="onoffswitch-switch"></span>
-        </label>
-    </div>
-    </td>
     </table>
 	<br>
     <table align="center" style="border: 1px">
@@ -334,14 +339,14 @@
 	<div id="myModal" class="modal">
 	<div class="modal-content">
 	    <span class="close" id="closeModal">&times;</span>
-		<u align="left" style="font-family: Noto Sans,sans-serif; font-weight: bold; font-size: 200%; color: black">Add Lab</u>
+		<u align="left" style="font-family: 'Roboto', sans-serif; font-weight: bold; font-size: 200%; color: black">Add Lab</u>
 		<div style="width: 100%; margin-top: 25px">
                 <div style="display: inline-block; border: transparent; float: left">
-                    <a style="font-family: Noto Sans,sans-serif; font-weight: bold; font-size: 100%; color: black">network</a><br>
+                    <a style="font-family: 'Roboto', sans-serif; font-weight: bold; font-size: 100%; color: black">network</a><br>
                     <input id="network" pattern="^([0-9]{1,3}\.){3}[0-9]{1,3}$"><br>
                 </div>
                 <div style="display: inline-block; border: transparent; float: right">
-                    <a style="font-family: Noto Sans,sans-serif; font-weight: bold; font-size: 100%; color: black">subnet</a><br>
+                    <a style="font-family: 'Roboto', sans-serif; font-weight: bold; font-size: 100%; color: black">subnet</a><br>
                     <input id="subnet" pattern="^([0-9]{1,3}\.){3}[0-9]{1,3}$"><br>
                 </div>
 				<div style="clear: both"></div>
@@ -354,20 +359,19 @@
 <div id="submitModal" class="modal">
   <div class="modal-content">
     <span class="close" id="closesubmitModal">&times;</span>
-    <u align="left" style="font-family: Noto Sans,sans-serif; font-weight: bold; font-size: 200%; color: black">Add Lab</u>
+    <u align="left" style="font-family: 'Roboto', sans-serif; font-weight: bold; font-size: 200%; color: black">Add Lab</u>
     <div>
-      <a style="font-family: Noto Sans,sans-serif; font-weight: bold; font-size: 100%; color: black">Lab name</a><br><input id="name"><br>
+      <a style="font-family: 'Roboto', sans-serif; font-weight: bold; font-size: 100%; color: black">Lab name</a><br><input id="name"><br>
     </div>
     <div style="margin-top: 25px; text-align: center; width: 100%">
 			<button class="button" id="submit" style="width: 120px">submit</button>
 		</div>
   </div>
 </div>
+</div>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script type="text/javascript">
-      var lab1 = document.getElementById("lab1");
-      var lab2 = document.getElementById("lab2");
-      var lab3 = document.getElementById("lab3");
+      var table = document.getElementById("t01");
 
   	  var btn = document.getElementById("out");
   	  var modal = document.getElementById("myModal");
@@ -390,53 +394,45 @@
         "subnet": ""
       }
 
-      // get Lab status from server
-      $.get('/initLabStatus')
-        .done(function (response) {
-          var obj = JSON.parse(response);
+      function initLabStatus() {
+        table.innerHTML = "";
+        $.get('/initLabStatus')
+          .done(function (response) {
+            var obj = JSON.parse(response);
 
-          console.log(obj)
+            console.log(obj)
 
-          obj.forEach(function (i, ind, a) {
-            labs.forEach(function (item, index, array) {
-              if (i["name"] == $(item).attr("id")) {
-                if (i["value"] == "true") {
-                  item.checked = true
-                }
-                else {
-                  item.checked = false
-                }
-              }
+            obj.forEach(function (i, ind, a) {
+              table.innerHTML += "<tr><th style=\"width: 200px\"><a style=\"font-family: 'Roboto', sans-serif; font-weight: bold; font-size: 100%; color: #eee\"" + ">" + i["name"] + "</a>" + "</th><td><div class=\"onoffswitch\">" + "<input type=\"checkbox\" name=\"onoffswitch\" class=\"onoffswitch-checkbox\" id=\"" + i["name"] + "\"" + ">" + "<label class=\"onoffswitch-label\" for=\"" + i["name"] + "\">" + "<span class=\"onoffswitch-inner\"></span><span class=\"onoffswitch-switch\"></span></label></div></td>"
             })
-          })
-        })
-        .fail(function (err) {
-          console.log(err)
-        })
 
-      // add event listener on every button
-      labs.forEach(function (item, index, array) {
-        item.addEventListener("change", function () {
+            $("input[name='onoffswitch']").each(function () {
+              $(this).on("change", function () {
 
-          var json = {
-            name: $(this).attr("id"),
-            value: this.checked
-          }
+                var json = {
+                  name: $(this).attr("id"),
+                  value: this.checked
+                }
 
-          console.log(json)
+                console.log(json)
 
-          $.post("/updateLabStatus", {
-            name: $(this).attr("id"),
-            value: this.checked
-          })
-          .done(function (data) {
-            console.log(data)
+                $.post("/updateLabStatus", json)
+                .done(function (data) {
+                  console.log(data)
+                })
+                .fail(function (err) {
+                  console.log(err)
+                })
+              })
+            })
+
           })
           .fail(function (err) {
             console.log(err)
           })
-        })
-      })
+      }
+
+    initLabStatus()
 
 	  btn.onclick = function(e) {
 		    e.preventDefault();
@@ -465,6 +461,7 @@
               console.log(data)
               alert("Lab added correctly")
               submitModal.style.display = "none"
+              initLabStatus()
             })
             .fail(function (err) {
               console.log(err)
@@ -476,11 +473,17 @@
       }
 
     }
+    submitSpan.onclick = function () {
+      submitModal.style.display = "none";
+    }
 
 	  window.onclick = function(event) {
 	    if (event.target == modal) {
-            modal.style.display = "none";
+        modal.style.display = "none";
         }
+      if (event.target == submitModal) {
+        submitModal.style.display = "none";
+      }
 	  }
     </script>
   </body>
