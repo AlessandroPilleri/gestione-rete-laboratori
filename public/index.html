@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+lastip<!DOCTYPE html>
 <html lang="en" dir="ltr">
   <head>
     <meta charset="utf-8">
@@ -332,22 +332,22 @@
 	<br>
     <table align="center" style="border: 1px">
         <th style="border: transparent">
-            <button id="out" class="button">add Lab</button>
+            <button id="out" class="button">add Rule</button>
         </th>
 	</table>
 	<br>
 	<div id="myModal" class="modal">
 	<div class="modal-content">
 	    <span class="close" id="closeModal">&times;</span>
-		<u align="left" style="font-family: 'Roboto', sans-serif; font-weight: bold; font-size: 200%; color: black">Add Lab</u>
+		<u align="left" style="font-family: 'Roboto', sans-serif; font-weight: bold; font-size: 200%; color: black">Add Rule</u>
 		<div style="width: 100%; margin-top: 25px">
                 <div style="display: inline-block; border: transparent; float: left">
-                    <a style="font-family: 'Roboto', sans-serif; font-weight: bold; font-size: 100%; color: black">network</a><br>
-                    <input id="network" pattern="^([0-9]{1,3}\.){3}[0-9]{1,3}$"><br>
+                    <a style="font-family: 'Roboto', sans-serif; font-weight: bold; font-size: 100%; color: black">first ip</a><br>
+                    <input id="firstip" pattern="^([0-9]{1,3}\.){3}[0-9]{1,3}$"><br>
                 </div>
                 <div style="display: inline-block; border: transparent; float: right">
-                    <a style="font-family: 'Roboto', sans-serif; font-weight: bold; font-size: 100%; color: black">subnet</a><br>
-                    <input id="subnet" pattern="^([0-9]{1,3}\.){3}[0-9]{1,3}$"><br>
+                    <a style="font-family: 'Roboto', sans-serif; font-weight: bold; font-size: 100%; color: black">last ip</a><br>
+                    <input id="lastip" pattern="^([0-9]{1,3}\.){3}[0-9]{1,3}$"><br>
                 </div>
 				<div style="clear: both"></div>
 		</div>
@@ -359,7 +359,7 @@
 <div id="submitModal" class="modal">
   <div class="modal-content">
     <span class="close" id="closesubmitModal">&times;</span>
-    <u align="left" style="font-family: 'Roboto', sans-serif; font-weight: bold; font-size: 200%; color: black">Add Lab</u>
+    <u align="left" style="font-family: 'Roboto', sans-serif; font-weight: bold; font-size: 200%; color: black">Add Rule</u>
     <div>
       <a style="font-family: 'Roboto', sans-serif; font-weight: bold; font-size: 100%; color: black">Lab name</a><br><input id="name"><br>
     </div>
@@ -378,8 +378,8 @@
   	  var span = document.getElementById("closeModal");
 
       var next = document.getElementById("next");
-      var network = document.getElementById("network");
-      var subnet = document.getElementById("subnet");
+      var firstip = document.getElementById("firstip");
+      var lastip = document.getElementById("lastip");
 
       var submitModal = document.getElementById("submitModal");
       var submitSpan = document.getElementById("closesubmitModal");
@@ -389,9 +389,10 @@
 
       var newLab = {
         "name": "",
-        "value": false,
-        "network": "",
-        "subnet": ""
+        "value": "false",
+        "firstip": "",
+        "lastip": "",
+        "proxy": ""
       }
 
       function initLabStatus() {
@@ -446,9 +447,9 @@
     next.onclick = function (e) {
       e.preventDefault();
 
-      if (/^([0-9]{1,3}\.){3}[0-9]{1,3}$/.test(network.value) && /^([0-9]{1,3}\.){3}[0-9]{1,3}$/.test(subnet.value)) {
-        newLab.network = network.value;
-        newLab.subnet = subnet.value;
+      if (/^([0-9]{1,3}\.){3}[0-9]{1,3}$/.test(firstip.value) && /^([0-9]{1,3}\.){3}[0-9]{1,3}$/.test(lastip.value)) {
+        newLab.firstip = firstip.value;
+        newLab.lastip = lastip.value;
         modal.style.display = "none"
         submitModal.style.display = "block"
 
@@ -459,7 +460,7 @@
           $.post("/newLab", newLab)
             .done(function (data) {
               console.log(data)
-              alert("Lab added correctly")
+              alert("Rule added correctly")
               submitModal.style.display = "none"
               initLabStatus()
             })
@@ -469,7 +470,7 @@
         }
       }
       else {
-        alert("Bad network ip or subnet mask")
+        alert("Bad first ip or last ip")
       }
 
     }

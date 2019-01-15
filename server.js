@@ -24,9 +24,17 @@ app.post('/updateLabStatus', function (req, res) {
 
   console.log(req.body)
 
+  var proxy = fs.readFileSync(confProxy)
+
   json.forEach(function (item, index, array) {
     if (item['name'] == req.body['name']) {
       item['value'] = req.body['value']
+      if (proxy.indexOf(item['proxy']) >= 0) {
+        proxy = proxy.split('\n').slice(proxy.indexOf(item['proxy'])).join('\n');
+      }
+      else {
+        proxy.join(item['proxy'])
+      }
     }
   })
 
@@ -42,9 +50,9 @@ app.post('/newLab', function (req, res) {
   var json = JSON.parse(content)
 
   console.log(req.body)
+  req.body['proxy'] = req.body['firstip'] + '-' + req.body['lastip'] + '/255.255.255.255'
 
   json.push(req.body)
-
   console.log(JSON.stringify(json))
 
   fs.writeFile(confJSON, JSON.stringify(json), function () {

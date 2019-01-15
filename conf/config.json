@@ -1,1 +1,9 @@
-[{"name":"Lab 1","value":"false","network":"192.168.1.0","subnet":"255.255.255.0"},{"name":"Lab 2","value":"false","network":"192.168.2.0","subnet":"255.255.255.0"},{"name":"Lab 3","value":"false","network":"192.168.3.0","subnet":"255.255.255.0"},{"name":"Lab 4","value":"false","network":"192.168.4.0","subnet":"255.255.255.0"}]
+[
+  {
+    "name":"Lab 1",
+    "value":"false",
+    "firstip":"192.168.1.1",
+    "lastip":"192.168.1.10",
+    "proxy": ""
+    }
+]
