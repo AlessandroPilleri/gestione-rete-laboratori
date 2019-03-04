@@ -1,491 +1,112 @@
-lastip<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en" dir="ltr">
   <head>
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+
+    <!-- jQuery library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+    <!-- Latest compiled JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
+    <link href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css" rel="stylesheet">
+<script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
+
     <meta charset="utf-8">
-    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
-    <meta name="viewpoint" content="width=device-width, initial-scale=1">
-    <style>
-            /* The container */
-            .container {
-                display: block;
-                position: relative;
-                padding-left: 35px;
-                margin-bottom: 12px;
-                cursor: pointer;
-                font-size: 22px;
-                -webkit-user-select: none;
-                -moz-user-select: none;
-                -ms-user-select: none;
-                user-select: none;
-            }
-
-            /* Hide the browser's default checkbox */
-            .container input {
-                position: absolute;
-                opacity: 0;
-                cursor: pointer;
-            }
-
-            /* Create a custom checkbox */
-            .checkmark {
-                position: absolute;
-                top: 0;
-                left: 0;
-                height: 25px;
-                width: 25px;
-                background-color: #ccc;
-            }
-
-            /* On mouse-over, add a grey background color */
-            .container:hover input ~ .checkmark {
-                background-color: #aaa;
-            }
-
-            /* When the checkbox is checked, add a blue background */
-            .container input:checked ~ .checkmark {
-                background-color: rgb(57, 180, 63);
-            }
-
-            /* Create the checkmark/indicator (hidden when not checked) */
-            .checkmark:after {
-                content: "";
-                position: absolute;
-                display: none;
-            }
-
-            /* Show the checkmark when checked */
-            .container input:checked ~ .checkmark:after {
-                display: block;
-            }
-
-            /* Style the checkmark/indicator */
-            .container .checkmark:after {
-                left: 9px;
-                top: 5px;
-                width: 5px;
-                height: 10px;
-                border: solid white;
-                border-width: 0 3px 3px 0;
-                -webkit-transform: rotate(45deg);
-                -ms-transform: rotate(45deg);
-                transform: rotate(45deg);
-            }
-            </style>
-    <style>
-            div.sticky {
-                width: 100%;
-                position: -webkit-sticky;
-                position: sticky;
-                top: 0;
-                background-color: #808080;
-                padding: 30px;
-                font-size: 20px;
-            z-index: 1;
-            }
-    </style>
-    <style>
-    * {
-    box-sizing: border-box;
-    }
-    .zoom {
-    padding: 50px;
-    transition: transform .2s;
-    width: 100%;
-    height: 100%;
-    margin: 0 auto;
-    }
-    .zoom:hover {
-    -ms-transform: scale(2); /* IE 9 */
-    -webkit-transform: scale(2); /* Safari 3-8 */
-    transform: scale(2);
-    border: 1px solid black;
-    }
-    </style>
-    <style>
-            .onoffswitch {
-        position: relative;
-        width: 79px;
-        float: right;
-    }
-    .onoffswitch-checkbox {
-        display: none;
-    }
-    .onoffswitch-label {
-        display: block; overflow: hidden; cursor: pointer;
-        border: 2px solid #999999; border-radius: 20px;
-    }
-    .onoffswitch-inner {
-        display: block; width: 200%; margin-left: -100%;
-        transition: margin 0.3s ease-in 0s;
-    }
-    .onoffswitch-inner:before, .onoffswitch-inner:after {
-        display: block; float: left; width: 50%; height: 30px; padding: 0; line-height: 30px;
-        font-size: 14px; color: white; font-family: Trebuchet, Arial, sans-serif; font-weight: bold;
-        box-sizing: border-box;
-    }
-    .onoffswitch-inner:before {
-        content: "ON";
-        padding-left: 10px;
-        background-color: rgb(57, 180, 63); color: #FFFFFF;
-    }
-    .onoffswitch-inner:after {
-        content: "OFF";
-        padding-right: 10px;
-        background-color: #EEEEEE; color: #999999;
-        text-align: right;
-    }
-    .onoffswitch-switch {
-        display: block; width: 18px; margin: 6px;
-        background: #FFFFFF;
-        position: absolute; top: 0; bottom: 0;
-        right: 45px;
-        border: 2px solid #999999; border-radius: 20px;
-        transition: all 0.3s ease-in 0s;
-    }
-    .onoffswitch-checkbox:checked + .onoffswitch-label .onoffswitch-inner {
-        margin-left: 0;
-    }
-    .onoffswitch-checkbox:checked + .onoffswitch-label .onoffswitch-switch {
-        right: 0px;
-    }
-    </style>
-    <style>
-        .button {
-			width: 150px;
-            padding: 15px 25px;
-            font-size: 24px;
-            text-align: center;
-            cursor: pointer;
-            outline: none;
-            color: #fff;
-            background-color: rgb(57, 180, 63);
-            border: none;
-            border-radius: 15px;
-            box-shadow: 0 9px rgb(44, 104, 44);
-        }
-
-        .button:hover {background-color: #4BB350}
-
-        .button:active {
-            background-color: #4BB350;
-            box-shadow: 0 5px #666;
-            transform: translateY(4px);
-        }
-    </style>
-    <style>
-        .switch {
-          position: relative;
-          display: inline-block;
-          width: 60px;
-          height: 34px;
-        }
-
-        .switch input {display:none;}
-
-        .slider {
-          position: absolute;
-          cursor: pointer;
-          top: 0;
-          left: 0;
-          right: 0;
-          bottom: 0;
-          background-color: #ccc;
-          -webkit-transition: .4s;
-          transition: .4s;
-        }
-
-        .slider:before {
-          position: absolute;
-          content: "";
-          height: 26px;
-          width: 26px;
-          left: 4px;
-          bottom: 4px;
-          background-color: white;
-          -webkit-transition: .4s;
-          transition: .4s;
-        }
-
-        input:checked + .slider {
-          background-color: #2196F3;
-        }
-        input:focus + .slider {
-          box-shadow: 0 0 1px #2196F3;
-    }
-        input:checked + .slider:before {
-          -webkit-transform: translateX(26px);
-          -ms-transform: translateX(26px);
-          transform: translateX(26px);
-        }
-        /* Rounded sliders */
-        .slider.round {
-          border-radius: 34px;
-        }
-        .slider.round:before {
-          border-radius: 50%;
-        }
-    </style>
-  <style>
-      body {font-family: Arial, Helvetica, sans-serif;}
-      .modal {
-    display: none;
-    position: fixed;
-    z-index: 1;
-    padding-top: 100px;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 110%;
-    overflow: auto;
-    background-color: rgb(0,0,0);
-    background-color: rgba(0,0,0,0.4);
-    animation-name: scroll;
-    animation-duration: 1s;
-      }
-
-    @keyframes scroll {
-      0% {top: -10%; opacity: 0}
-      100% {top: 0%; opacity: 1}
-    }
-
-      .modal-content {
-    background-color: #fefefe;
-    margin: auto;
-    padding: 20px;
-    border: 1px solid #888;
-	width: 40%
-      }
-      .close {
-    color: #aaaaaa;
-    float: right;
-    font-size: 28px;
-    font-weight: bold;
-      }
-      .close:hover,
-      .close:focus {
-    color: #000;
-    text-decoration: none;
-    cursor: pointer;
-      }
-  </style>
-  <style>
-            table {
-                width: 90%;
-            }
-            table, th, td {
-                border-collapse: collapse;
-                border-style: none;
-            }
-            th, td {
-                width: 10%;
-                padding: 20px;
-                text-align: center;
-            }
-            table#t01 tr:nth-child(odd) {
-                background-color: #eee;
-            }
-            table#t01 tr:nth-child(even) {
-                background-color: #fff;
-            }
-            table#t01 th {
-                background-color: rgb(59, 59, 59);
-                color: white;
-            }
-        </style>
-    <style>
-      a#title {
-        position: relative;
-        animation-name: slide;
-        animation-duration: 1s;
-        left: 37%;
-      }
-
-      @keyframes slide {
-        0% {left:20%; opacity: 0}
-        100% {left: 37%; opacity: 1}
-      }
-    </style>
-    <style>
-      div#content {
-        position: relative;
-        animation-name: slide-box;
-        animation-duration: 1s;
-        left: 25%;
-      }
-
-      @keyframes slide-box {
-        0% {left: 10%; opacity: 0}
-        100% {left: 25%; opacity: 1}
-      }
-    </style>
     <title>Gestione rete laboratori</title>
   </head>
   <body>
-    <body bgcolor="#3b3b3b">
-      <br>
-      <a id="title" style="font-family: 'Roboto', sans-serif; font-weight: bold; font-size: 280%; color: #fff; text-shadow: 8px 8px 4px #212121">Gestione rete laboratorio</a>
-      <br>
-    <div id="content" style="background-color: #cecece; width: 50%; height: 90%; box-shadow: 10px 10px 5px #212121">
-      <br>
-    <table id="t01" align="center" style="width: 300px">
-    </table>
-	<br>
-    <table align="center" style="border: 1px">
-        <th style="border: transparent">
-            <button id="out" class="button">add Rule</button>
-        </th>
-	</table>
-	<br>
-	<div id="myModal" class="modal">
-	<div class="modal-content">
-	    <span class="close" id="closeModal">&times;</span>
-		<u align="left" style="font-family: 'Roboto', sans-serif; font-weight: bold; font-size: 200%; color: black">Add Rule</u>
-		<div style="width: 100%; margin-top: 25px">
-                <div style="display: inline-block; border: transparent; float: left">
-                    <a style="font-family: 'Roboto', sans-serif; font-weight: bold; font-size: 100%; color: black">first ip</a><br>
-                    <input id="firstip" pattern="^([0-9]{1,3}\.){3}[0-9]{1,3}$"><br>
-                </div>
-                <div style="display: inline-block; border: transparent; float: right">
-                    <a style="font-family: 'Roboto', sans-serif; font-weight: bold; font-size: 100%; color: black">last ip</a><br>
-                    <input id="lastip" pattern="^([0-9]{1,3}\.){3}[0-9]{1,3}$"><br>
-                </div>
-				<div style="clear: both"></div>
-		</div>
-		<div style="margin-top: 25px; text-align: center; width: 100%">
-			<button class="button" id="next" style="width: 100px">next</button>
-		</div>
-	</div>
-</div>
-<div id="submitModal" class="modal">
-  <div class="modal-content">
-    <span class="close" id="closesubmitModal">&times;</span>
-    <u align="left" style="font-family: 'Roboto', sans-serif; font-weight: bold; font-size: 200%; color: black">Add Rule</u>
-    <div>
-      <a style="font-family: 'Roboto', sans-serif; font-weight: bold; font-size: 100%; color: black">Lab name</a><br><input id="name"><br>
+
+    <div class="container">
+      <div class="page-header">
+        <h1>Gestione rete laboratori</h1>
+      </div>
+      <div class="col-sm-4">
+
+      </div>
+      <div class="col-sm-4">
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th>Lab name</th>
+            <th>ON / OFF</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Lab 1</td>
+            <td><input type="checkbox" checked data-toggle="toggle"></td>
+          </tr>
+          <tr>
+            <td>Lab 2</td>
+            <td><input type="checkbox" checked data-toggle="toggle"></td>
+          </tr>
+          <tr>
+            <td>Lab 3</td>
+            <td><input type="checkbox" checked data-toggle="toggle"></td>
+          </tr>
+        </tbody>
+      </table>
+
+      </div>
     </div>
-    <div style="margin-top: 25px; text-align: center; width: 100%">
-			<button class="button" id="submit" style="width: 120px">submit</button>
-		</div>
-  </div>
-</div>
-</div>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script type="text/javascript">
-      var table = document.getElementById("t01");
 
-  	  var btn = document.getElementById("out");
-  	  var modal = document.getElementById("myModal");
-  	  var span = document.getElementById("closeModal");
+      <script type="text/javascript">
+        // title
+        // table
+        // add lab
+        // modal
 
-      var next = document.getElementById("next");
-      var firstip = document.getElementById("firstip");
-      var lastip = document.getElementById("lastip");
+        table = $('#t')
+        btns = $('.onoff')
 
-      var submitModal = document.getElementById("submitModal");
-      var submitSpan = document.getElementById("closesubmitModal");
-      var submit = document.getElementById("submit");
+        newLab = {
+          "name": "",
+          "value": "false",
+          "firstip": "",
+          "lastip": "",
+          "proxy": ""
+        }
 
-      var labs = document.getElementsByName("onoffswitch");
+        function initLabStatus() {
+          $.get('/initLabStatus')
+            .done(function (response) {
+              var obj = JSON.parse(response)
 
-      var newLab = {
-        "name": "",
-        "value": "false",
-        "firstip": "",
-        "lastip": "",
-        "proxy": ""
-      }
+              console.log(obj)
 
-      function initLabStatus() {
-        table.innerHTML = "";
-        $.get('/initLabStatus')
-          .done(function (response) {
-            var obj = JSON.parse(response);
+              obj.forEach(function (i, ind, a) {
+                // add element in table
+              })
 
-            console.log(obj)
+              $("input[name='onoff']").each(function () {
+                $(this).on("change", function () {
+                  var json = {
+                    name: $(this).attr("id"),
+                    value: this.checked
+                  }
 
-            obj.forEach(function (i, ind, a) {
-              table.innerHTML += "<tr><th style=\"width: 200px\"><a style=\"font-family: 'Roboto', sans-serif; font-weight: bold; font-size: 100%; color: #eee\"" + ">" + i["name"] + "</a>" + "</th><td><div class=\"onoffswitch\">" + "<input type=\"checkbox\" name=\"onoffswitch\" class=\"onoffswitch-checkbox\" id=\"" + i["name"] + "\"" + ">" + "<label class=\"onoffswitch-label\" for=\"" + i["name"] + "\">" + "<span class=\"onoffswitch-inner\"></span><span class=\"onoffswitch-switch\"></span></label></div></td>"
-            })
+                  console.log(json)
 
-            $("input[name='onoffswitch']").each(function () {
-              $(this).on("change", function () {
-
-                var json = {
-                  name: $(this).attr("id"),
-                  value: this.checked
-                }
-
-                console.log(json)
-
-                $.post("/updateLabStatus", json)
-                .done(function (data) {
-                  console.log(data)
-                })
-                .fail(function (err) {
-                  console.log(err)
+                  $.post("/updateLabStatus", json)
+                    .done(function (data) {
+                      console.log(data)
+                    })
+                    .fail(function (err) {
+                      console.log(err)
+                    })
+                  })
                 })
               })
-            })
-
-          })
-          .fail(function (err) {
-            console.log(err)
-          })
-      }
-
-    initLabStatus()
-
-	  btn.onclick = function(e) {
-		    e.preventDefault();
-
-        modal.style.display = "block";
-	  }
-   	  span.onclick = function () {
-        modal.style.display = "none";
-	  }
-
-    next.onclick = function (e) {
-      e.preventDefault();
-
-      if (/^([0-9]{1,3}\.){3}[0-9]{1,3}$/.test(firstip.value) && /^([0-9]{1,3}\.){3}[0-9]{1,3}$/.test(lastip.value)) {
-        newLab.firstip = firstip.value;
-        newLab.lastip = lastip.value;
-        modal.style.display = "none"
-        submitModal.style.display = "block"
-
-        submit.onclick = function (e) {
-          e.preventDefault();
-
-          newLab.name = document.getElementById("name").value;
-          $.post("/newLab", newLab)
-            .done(function (data) {
-              console.log(data)
-              alert("Rule added correctly")
-              submitModal.style.display = "none"
-              initLabStatus()
-            })
-            .fail(function (err) {
-              console.log(err)
+              .fail(function (err) {
+                console.log(err)
             })
         }
-      }
-      else {
-        alert("Bad first ip or last ip")
-      }
 
-    }
-    submitSpan.onclick = function () {
-      submitModal.style.display = "none";
-    }
+        initLabStatus()
 
-	  window.onclick = function(event) {
-	    if (event.target == modal) {
-        modal.style.display = "none";
-        }
-      if (event.target == submitModal) {
-        submitModal.style.display = "none";
-      }
-	  }
-    </script>
+
+      </script>
   </body>
 </html>
